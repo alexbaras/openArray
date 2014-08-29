@@ -16,12 +16,12 @@ readOpenArray <- function(filename, fileFormat="default") {
   }
 
   d = d[,c("Chip.Id","Chip.Well","Sample.Id","Feature.Set","Feature.Id","Cycle","Value")];    
-  d = d[order(d$Chip.Id,d$Chip.Well,d$Sample.Id,d$Feature.Set,d$Feature.Id),];
 
   #Some basic error check
   if(is.null(d$Value)){
     stop("Error: You must have a Value column for the raw fluorescence values.");
   }
   
+  d = split(d,paste(d$Chip.Id,d$Chip.Well,d$Sample.Id,d$Feature.Set,d$Feature.Id,sep="::"))
   return(d)
 }
